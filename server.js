@@ -1,18 +1,30 @@
 const fs = require('fs');
-const path = require('path');
-const {db} = require('./Develop/db/db');
+const path = require("path");
+const newNotes = require('./Develop/db/db.json');
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
-app.listen(3000, () => {
-    console.log(`API server now on port ${PORT}!`);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static('public'));
+
+
+  //returns index page 
+  app.get('/',(req, res) => {
+        res.send('Welcome to My Note Taking Challenge');
+        res.sendFile(path.join(__dirname,'.Develop/public/index.html'))
+    
+});
+//returns the notes.html page
+  app.get('/notes',(req, res) => {
+      res.sendFile(path.join(__dirname,'.Develop/public/notes.html'));
   });
   // function to search notes 
   function findById(id, notesArray) {
     const result = notesArray.filter(db => db.id === id)[0];
     return result;
   }
-
+// function to create notes
   function createNewNotes(body, notesArray){
       const db = body;
       notesArray.push(db);
@@ -22,6 +34,7 @@ app.listen(3000, () => {
       );
       return db;
   }
+  
   // function to get search results and return error if no results 
   app.get('/api/db/:id',(req, res) => {
       const result = findById(req.params.id, db);
@@ -31,10 +44,13 @@ app.listen(3000, () => {
         res.send(404);
       }
   });
-  app.post('/api/db/',(req, res) => {
+  app.post('/api/notes',(req, res) => {
     //allow id's to be unique keys so increases after the last entry
       req.body.id = db.length.toString();
       //call on function to add new notes
       const db = createNewNotes (req.body, db);
       res.json(db);
+  });
+  app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
   });

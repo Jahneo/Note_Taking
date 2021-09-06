@@ -3,14 +3,16 @@ let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
-
-if (window.location.pathname === '/notes') {
+typeof window  === window.location.pathname;
+//var location = window.location.pathname;
+if (typeof window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
 }
+
 
 // Show an element
 const show = (elem) => {
@@ -57,6 +59,7 @@ const renderActiveNote = () => {
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
+    noteText.value = activeNote.title;
     noteText.value = activeNote.text;
   } else {
     noteTitle.removeAttribute('readonly');

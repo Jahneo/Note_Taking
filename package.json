@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "domino": "^2.1.6",
     "express": "^4.17.1"
   },
   "devDependencies": {},
@@ -15,7 +16,10 @@
     "type": "git",
     "url": "git+https://github.com/Jahneo/Note_Taking.git"
   },
-  "keywords": [],
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
