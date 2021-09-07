@@ -52,4 +52,4 @@ POST /api/notes should receive a new note to save on the request body, add it to
 
 # Initial Serve setup
 
-(./Develop/public/assets/images/server_on.PNG)
+![Server_on](./Develop/public/assets/images/server_on.PNG)
