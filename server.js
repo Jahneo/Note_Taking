@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-const fs = require('fs');
-const path = require('path');
-const {db} = require('./Develop/db/db');
-=======
 //const cool = require('cool-ascii-faces');
 const fs = require('fs');
 const path = require("path");
 const {db} = require('./Develop/db/db.json');
->>>>>>> feature/server
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
