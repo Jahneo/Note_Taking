@@ -42,52 +42,9 @@ function filterByQuery(query, notesArray) {
   if (query.id) {
     filteredResults = filteredResults.filter(db => db.id === query.id);
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
- //function to create notes
->>>>>>> feature/server
-  function createNewNotes(body, notesArray){
-      const db = body;
-      notesArray.push(db);
-      fs.writeFileSync(
-          path.join(__dirname,'./Develop/db/db.json'),
-          JSON.stringify({db:notesArray}, null,2)
-      );
-      return db;
-  }
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/server
-  // function to get search results and return error if no results 
-  app.get('/api/db/:id',(req, res) => {
-      const result = findById(req.params.id, db);
-      if (result) {
-        res.json(result);
-      } else {
-        res.send(404);
-      }
-  });
-<<<<<<< HEAD
-  app.post('/api/db/:id',(req, res) => {
-=======
-  app.post('/api/notes',(req, res) => {
->>>>>>> feature/server
-    //allow id's to be unique keys so increases after the last entry
-      req.body.id = db.length.toString();
-      //call on function to add new notes
-      const db = createNewNotes (req.body, db);
-      res.json(db);
-<<<<<<< HEAD
-=======
-  });
-=======
   if (query.title) {
-    filteredResults = filteredResults.filter(db => db.Title === query.Title);
+    filteredResults = filteredResults.filter(db => db.title === query.title);
   }
->>>>>>> feature/server
   
   return filteredResults;
 }
@@ -104,5 +61,4 @@ function createNewNotes (body, notesArray) {
 
   app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
->>>>>>> feature/server
   });
