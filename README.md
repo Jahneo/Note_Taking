@@ -30,10 +30,10 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 
 # Mock Up
 The following images show the web application's appearance and functionality:
-(./Develop/public/assets/images/demo-01.png)
+![Demo 1}(./Develop/public/assets/images/demo-01.png)
 
 
-(./Develop/public/assets/images/demo-01.png)
+![Demo2](./Develop/public/assets/images/demo-01.png)
 
 # Getting Started
 The application should have a db.json file on the back end that will be used to store and retrieve notes using the fs module.
@@ -52,4 +52,4 @@ POST /api/notes should receive a new note to save on the request body, add it to
 
 # Initial Serve setup
 
-(./Develop/public/assets/images/server_on.PNG)
+![Sever active](./Develop/public/assets/images/server_on.PNG)
