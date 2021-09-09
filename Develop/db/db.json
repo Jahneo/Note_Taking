@@ -11,12 +11,18 @@
             "id": "1",
             "Title": "Reschedule delivery"
         },
-        
+        {
+          "id": "2",
+          "Title": "Accept payments"
+      },
         {
             "id": "3",
             "Title": "Finish payroll"
-        }
-        
+        },
+        {
+          "id": "4",
+          "Title": "Pay staff"
+      }
 
             ]
     }
