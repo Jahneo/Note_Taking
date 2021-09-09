@@ -31,7 +31,27 @@ app.post('/api/db',(req, res) =>{
    res.json(req.body);
 });
 
-
+/*
+app.fetch('/api/db', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  //res.json(req.body);
+  body: JSON.stringify(req.body)
+})
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    alert('Error: ' + response.statusText);
+  })
+  .then(postResponse => {
+    console.log(postResponse);
+    alert('Thank you for adding a new note');
+  });
+*/
 function findById (id, notesArray) {
   const result = notesArray.filter(db => db.id == id)[0];
   return result;
@@ -61,4 +81,10 @@ function createNewNotes (body, notesArray) {
 
   app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
+  });
+  app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+  });
+  app.get('*',(req, res) => {
+    res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
   });
