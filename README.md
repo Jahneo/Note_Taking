@@ -30,7 +30,7 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 
 # Mock Up
 The following images show the web application's appearance and functionality:
-![Demo 1}(./Develop/public/assets/images/demo-01.png)
+![Demo 1](./Develop/public/assets/images/demo-01.png)
 
 
 ![Demo2](./Develop/public/assets/images/demo-01.png)
