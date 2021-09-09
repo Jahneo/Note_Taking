@@ -12,9 +12,15 @@ let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
+<<<<<<< HEAD
 typeof window  === window.location.pathname;
 //var location = window.location.pathname;
 if (typeof window.location.pathname === '/notes') {
+>>>>>>> feature/server
+=======
+
+
+if ( window.location.pathname === '/notes') {
 >>>>>>> feature/server
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');

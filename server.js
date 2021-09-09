@@ -9,40 +9,40 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-
-  //returns index page 
-  app.get('/',(req, res) => {
-        res.send('Welcome to My Note Taking Challenge');
-        res.sendFile(path.join(__dirname,'.Develop/public/index.html'))
-    
-});
-//returns the notes.html page
-  app.get('/notes',(req, res) => {
-      res.sendFile(path.join(__dirname,'.Develop/public/notes.html'));
-  });
-
-  app.route('/api/notes')
-      //.get('/api/notes',(req, res) => {
-     // res.json({db});
-     // })
-/*
-      .post('/api/notes',(req, res) => {
-        res.sendFile(path.join(__dirname,'.Develop/public/notes.html'));
-        let incomingNotes = req.body;
-        let highestPossibleNotes = 80;
-        for (let i = 0; i < db.length; i++) {
-          let addNotes = db[i];
-          if (addNotes.id > incomingNotes)
-          addNotes =  incomingNotes.id;
-        }
-      })
-      incomingNotes.id = highestPossibleNotes + 1;
-*/
- //function to search notes 
-  function findById(id, notesArray) {
-    const result = notesArray.filter(db => db.id === id)[0];
-    return result;
+app.get('/api/db',(req,res)=> {
+  let results = db;
+  if(req.query){
+    results = filterByQuery(req.query,results);
   }
+    res.json(results);
+});
+app.get('/api/db/:id',(req,res)=> {
+  const result = findById(req.params.id, db);
+  if (result) {
+  res.json(result);
+    }else {
+    res.status(404).send('Sorry can not find that page');
+  }
+});
+app.post('/api/db',(req, res) =>{
+   //incoming post store in req.body
+  req.body.id = db.length.toString();
+  const notes = createNewNotes(req.body, db);
+   res.json(req.body);
+});
+
+
+function findById (id, notesArray) {
+  const result = notesArray.filter(db => db.id == id)[0];
+  return result;
+}
+
+function filterByQuery(query, notesArray) {
+  let filteredResults = notesArray;
+  if (query.id) {
+    filteredResults = filteredResults.filter(db => db.id === query.id);
+  }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
@@ -83,7 +83,25 @@ app.use(express.static('public'));
 <<<<<<< HEAD
 =======
   });
+=======
+  if (query.title) {
+    filteredResults = filteredResults.filter(db => db.Title === query.Title);
+  }
+>>>>>>> feature/server
   
+  return filteredResults;
+}
+function createNewNotes (body, notesArray) {
+  const db= body;
+  notesArray.push(db);
+  fs.writeFileSync(
+    path.join(__dirname, './Develop/db/db.json'),
+    JSON.stringify({ db: notesArray }, null, 2)
+  );
+  //console.log(body);
+  return db;
+}
+
   app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 >>>>>>> feature/server
