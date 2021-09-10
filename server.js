@@ -28,30 +28,21 @@ app.post('/api/db',(req, res) =>{
    //incoming post store in req.body
   req.body.id = db.length.toString();
   const notes = createNewNotes(req.body, db);
-   res.json(req.body);
+   res.json(notes);
 });
-
-/*
-app.fetch('/api/db', {
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  //res.json(req.body);
-  body: JSON.stringify(req.body)
-})
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    alert('Error: ' + response.statusText);
-  })
-  .then(postResponse => {
-    console.log(postResponse);
-    alert('Thank you for adding a new note');
+app.post('/deleteNote/:id', function (req, res) {
+  console.log(req.params.id);
+  const deleteNotes = note.filter(item => item.id != req.params.id);
+  note = deleteNotes;
+  return res.redirect('/');
+});
+const getDB = (formData = {}) => {
+  let queryUrl = '/api/db?';
+  Object.entries(formData).forEach(([key,value]) => {
+    queryUrl += '${key}=${value}&';
   });
-*/
+  console.log(queryUrl);
+}
 function findById (id, notesArray) {
   const result = notesArray.filter(db => db.id == id)[0];
   return result;
@@ -83,8 +74,8 @@ function createNewNotes (body, notesArray) {
     console.log(`API server now on port ${PORT}!`);
   });
   app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+    res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
   });
   app.get('*',(req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+    res.sendFile(path.join(__dirname, './Develop/public/index.html'));
   });
