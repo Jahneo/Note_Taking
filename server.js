@@ -2,9 +2,12 @@
 const fs = require('fs');
 const path = require("path");
 const {db} = require('./Develop/db/db.json');
+//const {db} = require('./db/db.json');
 const express = require('express');
+//const {route} = require('./apiRoutes/dbRoutes');
 const PORT = process.env.PORT || 3000;
 const app = express();
+app.route(require('./apiRoutes/dbRoutes'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
@@ -30,7 +33,7 @@ app.post('/api/db',(req, res) =>{
   const notes = createNewNotes(req.body, db);
    res.json(notes);
 });
-app.post('/deleteNote/:id', function (req, res) {
+app.delete('/api/db:id', function (req, res) {
   console.log(req.params.id);
   const deleteNotes = note.filter(item => item.id != req.params.id);
   note = deleteNotes;

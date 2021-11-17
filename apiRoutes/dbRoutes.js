@@ -3,8 +3,8 @@ const {
     findById,
     filterByQuery,
     createNewNotes,
-} = require('./Develop/db/db.json');
-router.get('/api/db',(req,res)=> {
+} = require('../server.js');
+router.get('/api.db',(req,res)=> {
     let results = db;
     if(req.query){
       results = filterByQuery(req.query,results);
