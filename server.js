@@ -2,24 +2,36 @@
 const fs = require('fs');
 const path = require("path");
 const {db} = require('./Develop/db/db.json');
-//const {db} = require('./db/db.json');
+
 const express = require('express');
-//const {route} = require('./apiRoutes/dbRoutes');
-const PORT = process.env.PORT || 3000;
+const apiRoutes = require('./Routes/dbRoutes');
+const htmlRoutes = require('./Routes/htmlRoutes');
+const PORT = process.env.PORT || 3080;
 const app = express();
-app.route(require('./apiRoutes/dbRoutes'));
+app.route(require('./Routes/dbRoutes'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
-app.get('/api/db',(req,res)=> {
-  let results = db;
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+});
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+});
+app.get('*',(req, res) => {
+  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+});
+app.get('/api/notes',(req,res)=> {
+  let results = notes;
   if(req.query){
     results = filterByQuery(req.query,results);
   }
     res.json(results);
 });
-app.get('/api/db/:id',(req,res)=> {
+app.get('/api/notes/:id',(req,res)=> {
   const result = findById(req.params.id, db);
   if (result) {
   res.json(result);
@@ -27,20 +39,20 @@ app.get('/api/db/:id',(req,res)=> {
     res.status(404).send('Sorry can not find that page');
   }
 });
-app.post('/api/db',(req, res) =>{
+app.post('/api/notes',(req, res) =>{
    //incoming post store in req.body
   req.body.id = db.length.toString();
   const notes = createNewNotes(req.body, db);
    res.json(notes);
 });
-app.delete('/api/db:id', function (req, res) {
-  console.log(req.params.id);
-  const deleteNotes = note.filter(item => item.id != req.params.id);
-  note = deleteNotes;
+app.delete('/api/notes:id', function (req, res) {
+  //console.log(req.params.id);
+  const deleteNotes = db.filter(item => item.id != req.params.id);
+  notes = deleteNotes;
   return res.redirect('/');
 });
 const getDB = (formData = {}) => {
-  let queryUrl = '/api/db?';
+  let queryUrl = '/api/notes?';
   Object.entries(formData).forEach(([key,value]) => {
     queryUrl += '${key}=${value}&';
   });
@@ -72,13 +84,23 @@ function createNewNotes (body, notesArray) {
   //console.log(body);
   return db;
 }
+function deleteNotes(id,notesArray){
+  for (let i = 0; i < notesArray.length; i++){
+    let db = notesArray[i];
+    if (db.id == id) {
+      notesArray.splice(i, 1);
+      fs.writeFileSync(
+          path.join(__dirname, './Develop/db/db.json'),
+          JSON.stringify(notesArray, null, 2)
+      );
+
+      break;
+  }
+}
+}
+  
 
   app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
   });
-  app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
-  });
-  app.get('*',(req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/index.html'));
-  });
+ 
